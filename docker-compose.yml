@@ -1,0 +1,13 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: api-dev
+    restart: unless-stopped
+
+    volumes:
+      - ./api:/app:cached
+    command: air
+    ports:
+      - "8080:8080"
