@@ -2,8 +2,8 @@ package analyze
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
+	"sort"
 )
 
 // Should've reused existing Cards struct
@@ -20,7 +20,6 @@ func parseCard(cardStr string) Card {
 }
 
 func EvaluateHand(hand string) string {
-	fmt.Printf("\nHand in: %s", hand)
 	var cardStrs []string
 	err := json.Unmarshal([]byte(hand), &cardStrs)
 	if err != nil {
@@ -35,9 +34,11 @@ func EvaluateHand(hand string) string {
 		cardCount[card.Value]++
 		suitCount[card.Suit]++
 	}
-
-	// fmt.Printf("\nCard counts: %v", cardCount)
-	// fmt.Printf("\nSuit counts: %v", suitCount)
+	// log.Printf("\nCard count: %v", cardCount)
+	// log.Printf(string(len(card.Value)))
+	// if len(cardCount) != 5 {
+	// 	return "Invalid Hand"
+	// }
 
 	// Convert card values to numbers
 	for card, count := range cardCount {
@@ -59,21 +60,64 @@ func EvaluateHand(hand string) string {
 			delete(cardCount, card)
 		}
 	}
-	fmt.Printf("\nCard count after convert: %v", cardCount)
-	fmt.Printf("\n---\n")
+	// Sort cardCount in increasing order
+	var sortedCards []string
+	for card := range cardCount {
+		sortedCards = append(sortedCards, card)
+	}
+	sort.Strings(sortedCards)
+
+	// Print sorted cardCount
+	// log.Printf("\nCard count in increasing order: %v", sortedCards)
+	// log.Printf("\nCard count after convert: %v", cardCount)
+	// log.Printf("\n---\n")
 
 	var result string
 	for _, count := range cardCount {
 		switch count {
+		// case isRoyalFlush(cardCount):
+
 		case 4:
 			result = "Four of a Kind"
 		case 3:
 			result = "Three of a Kind"
 		case 2:
 			result = "Pair"
+			// case 1:
+			// 	result = "High Card"
+			// default:
+			// 	result = "High Card"
 		}
 	}
-	return hand + result
 
-	// return hand
+	// Check for other common types of poker hands
+	// if len(cardCount) == 5 {
+	// 	// Check for straight
+	// 	if isStraight(cardCount) {
+	// 		result = "Straight"
+	// 	}
+	// 	// Check for flush
+	// 	if isFlush(suitCount) {
+	// 		result = "Flush"
+	// 	}
+	// 	// Check for straight flush
+	// 	if isStraight(cardCount) && isFlush(suitCount) {
+	// 		result = "Straight Flush"
+	// 	}
+	// }
+
+	// jsonResult, err := json.Marshal("hand: " + result)
+	// if err != nil {
+	// 	log.Fatalf("Error marshalling: %v", err)
+	// }
+	// return string(jsonResult)
+	return result
 }
+
+// func isRoyalFlush(cardCount map[string]int)
+
+// func isFullHouse(cardCount map[string]int) {
+// 	if cardCount[0] == 3 && cardCount[1] == 2 {
+// 		return true
+// 	}
+// }
