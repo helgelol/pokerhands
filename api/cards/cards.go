@@ -1,6 +1,7 @@
 package cards
 
 import (
+	"encoding/json"
 	"fmt"
 	"math/rand"
 	"time"
@@ -11,7 +12,6 @@ type Card struct {
 	Value string
 }
 
-// Basert på Case, ser det ut kort identifiseres på første bokstav i sorten
 var suit = [...]string{"s", "h", "r", "k"}
 var values = [...]string{"2", "3", "4", "5", "6", "7", "8", "9", "t", "j", "q", "k", "a"}
 
@@ -23,12 +23,13 @@ func newDeck() []Card {
 	return deck
 }
 
-func shuffle(deck []Card) {
+func shuffle(deck []Card) []Card {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	for i := range deck {
+	for i := len(deck) - 1; i > 0; i-- {
 		j := r.Intn(i + 1)
 		deck[i], deck[j] = deck[j], deck[i]
 	}
+	return deck
 }
 
 func dealHand(deck []Card, handSize int) []Card {
@@ -39,9 +40,24 @@ func dealHand(deck []Card, handSize int) []Card {
 	return deck[:handSize]
 }
 
-func Play() []Card {
+// Convert cards to specified string format
+func cardToString(card Card) string {
+	return card.Value + card.Suit
+}
+
+func Play() string {
 	deck := newDeck()
-	shuffle(deck)
-	hand := dealHand(deck, 5)
-	return hand
+	shuffledDeck := shuffle(deck)
+	hand := dealHand(shuffledDeck, 5)
+	// hand := dealHand(deck, 5)
+
+	var handStr []string
+	for _, card := range hand {
+		handStr = append(handStr, cardToString(card))
+	}
+	handJson, err := json.Marshal(handStr)
+	if err != nil {
+		fmt.Println("Error marshalling hand to JSON:", err)
+	}
+	return string(handJson)
 }
