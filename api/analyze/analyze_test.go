@@ -67,13 +67,19 @@ func TestCheatingHand(t *testing.T) {
 }
 
 func TestInvalidSuit(t *testing.T) {
-	hand := "[\"4k\",\"4s\",\"4r\",\"4ks\",\"5f\"]"
+	hand := "[\"4k\",\"4s\",\"4r\",\"4k\",\"5f\"]"
 	evaluation := EvaluateHand(hand)
-	assert.Equal(t, "Invalid suit", evaluation)
+	assert.Equal(t, "invalid suit", evaluation)
 }
 
-// func TestInvalidValue(t *testing.T) {
-// 	hand := "[\"4h\",\"4r\",\"th\",\"8s\",\"fk\"]"
-// 	evaluation := EvaluateHand(hand)
-// 	assert.Equal(t, "Invalid value", evaluation)
-// }
+func TestInvalidValue(t *testing.T) {
+	hand := "[\"4h\",\"4r\",\"th\",\"8s\",\"fk\"]"
+	evaluation := EvaluateHand(hand)
+	assert.Equal(t, "invalid card value", evaluation)
+}
+
+func TestInvalidLength(t *testing.T) {
+	hand := "[\"4h\",\"4r\",\"th\",\"8ks\",\"fk\"]"
+	evaluation := EvaluateHand(hand)
+	assert.Equal(t, "invalid card format", evaluation)
+}
