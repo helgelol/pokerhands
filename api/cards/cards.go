@@ -2,7 +2,7 @@ package cards
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 	"math/rand"
 	"time"
 )
@@ -34,7 +34,7 @@ func shuffle(deck []Card) []Card {
 
 func dealHand(deck []Card, handSize int) []Card {
 	if handSize > len(deck) {
-		fmt.Println("Request exceeds deck size.")
+		log.Fatal("Request exceeds deck size.")
 		return nil
 	}
 	return deck[:handSize]
@@ -49,15 +49,15 @@ func Play() string {
 	deck := newDeck()
 	shuffledDeck := shuffle(deck)
 	hand := dealHand(shuffledDeck, 5)
-	// hand := dealHand(deck, 5)
 
 	var handStr []string
 	for _, card := range hand {
 		handStr = append(handStr, cardToString(card))
 	}
+
 	handJson, err := json.Marshal(handStr)
 	if err != nil {
-		fmt.Println("Error marshalling hand to JSON:", err)
+		log.Println("Error marshalling hand to JSON:", err)
 	}
 	return string(handJson)
 }
