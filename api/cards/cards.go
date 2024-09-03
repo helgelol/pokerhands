@@ -57,7 +57,7 @@ func Play() string {
 
 	handJson, err := json.Marshal(handStr)
 	if err != nil {
-		log.Println("Error marshalling hand to JSON:", err)
+		log.Fatal("Error marshalling hand to JSON:", err)
 	}
 	return string(handJson)
 }
