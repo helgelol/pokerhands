@@ -18,21 +18,19 @@ func parseCard(cardStr string) (Card, error) {
 
 	value := string(cardStr[0])
 	suit := string(cardStr[1])
-	// log.Printf("Value: %s", value)
-	// log.Printf("Suit: %s", suit)
 
 	if len(cardStr) != 2 {
-		return Card{}, fmt.Errorf("invalid card format: %s", cardStr)
+		return Card{}, fmt.Errorf("invalid card format")
 	}
 
 	validCards := []string{"2", "3", "4", "5", "6", "7", "8", "9", "t", "j", "q", "k", "a"}
 	if !contains(validCards, value) {
-		return Card{}, fmt.Errorf("invalid card value: %s", cardStr)
+		return Card{}, fmt.Errorf("invalid card value")
 	}
 
 	validSuits := []string{"k", "r", "h", "s"}
 	if !contains(validSuits, suit) {
-		return Card{}, fmt.Errorf("invalid suit: %s", suit)
+		return Card{}, fmt.Errorf("invalid suit")
 	}
 
 	return Card{
@@ -67,7 +65,7 @@ func EvaluateHand(hand string) string {
 	for _, cardStr := range cardStrs {
 		card, err := parseCard(cardStr)
 		if err != nil {
-			return "Invalid suit"
+			return err.Error()
 		}
 		cardCount[card.Value]++
 		suitCount[card.Suit]++
