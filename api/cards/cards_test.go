@@ -1,5 +1,3 @@
-// FILEPATH: /Users/hfalch/kubes/pokerhands/api/cards/cards_test.go
-
 package cards
 
 import (
