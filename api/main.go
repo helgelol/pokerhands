@@ -51,7 +51,10 @@ func newHand(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Printf("Evaluation: %v", response.Evaluation)
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(result)
+	_, err = w.Write(result)
+	if err != nil {
+		log.Fatalf("Error writing response: %v", err)
+	}
 }
 
 func checkHand(w http.ResponseWriter, r *http.Request) {
@@ -95,5 +98,8 @@ func checkHand(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(result)
+	_, err = w.Write(result)
+	if err != nil {
+		log.Fatalf("Error writing response: %v", err)
+	}
 }
