@@ -78,8 +78,25 @@ func TestInvalidValue(t *testing.T) {
 	assert.Equal(t, "invalid card value", evaluation)
 }
 
-func TestInvalidLength(t *testing.T) {
-	hand := "[\"4h\",\"4r\",\"th\",\"8ks\",\"fk\"]"
+func TestInvalidLengthLong(t *testing.T) {
+	hand := "[\"4h\",\"4r\",\"th\",\"8ks\",\"9k\"]"
+	evaluation := EvaluateHand(hand)
+	assert.Equal(t, "invalid card format", evaluation)
+}
+func TestInvalidLengthLongNumber(t *testing.T) {
+	hand := "[\"4h\",\"4r\",\"th\",\"789\",\"2k\"]"
+	evaluation := EvaluateHand(hand)
+	assert.Equal(t, "invalid card format", evaluation)
+}
+
+func TestInvalidLengthShort(t *testing.T) {
+	hand := "[\"4h\",\"4r\",\"th\",\"8k\",\"9\"]"
+	evaluation := EvaluateHand(hand)
+	assert.Equal(t, "invalid card format", evaluation)
+}
+
+func TestInvalidLengthShortLetter(t *testing.T) {
+	hand := "[\"4h\",\"4r\",\"th\",\"8k\",\"v\"]"
 	evaluation := EvaluateHand(hand)
 	assert.Equal(t, "invalid card format", evaluation)
 }
