@@ -34,11 +34,12 @@ jobs:
   build:
     needs: [test, lint]
     name: Build
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Build
-        uses: ko-build/setup-ko@v0.6
+        uses: ko-build/setup-ko@v0.7
       - run: cd api && ko build
