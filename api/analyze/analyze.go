@@ -16,12 +16,12 @@ type Card struct {
 
 func parseCard(cardStr string) (Card, error) {
 
-	value := string(cardStr[0])
-	suit := string(cardStr[1])
-
 	if len(cardStr) != 2 {
 		return Card{}, fmt.Errorf("invalid card format")
 	}
+
+	value := string(cardStr[0])
+	suit := string(cardStr[1])
 
 	validCards := []string{"2", "3", "4", "5", "6", "7", "8", "9", "t", "j", "q", "k", "a"}
 	if !contains(validCards, value) {
