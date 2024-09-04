@@ -32,7 +32,7 @@ jobs:
           version: v1.60
 
   build:
-    needs: test
+    needs: [test, lint]
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -41,4 +41,4 @@ jobs:
 
       - name: Build
         uses: ko-build/setup-ko@v0.6
-      - run: ko build
+      - run: cd api && ko build
