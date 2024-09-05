@@ -14,6 +14,11 @@ make test
 
 This runs all the tests within the `api` folder.
 
+## Example query
+```
+curl -X POST http://localhost:8080/check -H "Content-Type: application/json" -d '{"hand":["4k","4s","4r","4h","9k"]}'
+```
+
 ## Details
 
 - API written in Go
