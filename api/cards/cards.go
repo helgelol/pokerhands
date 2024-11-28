@@ -60,4 +60,6 @@ func Play() string {
 		log.Fatal("Error marshalling hand to JSON:", err)
 	}
 	return string(handJson)
+	// log.Printf("Hand Generated: %s", strings.Join(handStr, ""))
+	// return strings.Join(handStr, "")
 }
