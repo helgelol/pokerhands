@@ -41,7 +41,8 @@ func newHand(w http.ResponseWriter, r *http.Request) {
 	}
 	evaluation := analyze.EvaluateHand(hand)
 	response := GeneratedHandResponse{
-		Hand:       handStr,
+		Hand: handStr,
+		// Hand:       []string(hand),
 		Evaluation: evaluation,
 	}
 
