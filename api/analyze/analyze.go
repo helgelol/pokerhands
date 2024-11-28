@@ -6,18 +6,14 @@ import (
 	"log"
 	"sort"
 	"strconv"
+
+	"github.com/helgelol/pokerhands/api/cards"
 )
 
-// Should've reused existing Cards struct
-type Card struct {
-	Value string
-	Suit  string
-}
-
-func parseCard(cardStr string) (Card, error) {
+func parseCard(cardStr string) (cards.Card, error) {
 
 	if len(cardStr) != 2 {
-		return Card{}, fmt.Errorf("invalid card format")
+		return cards.Card{}, fmt.Errorf("invalid card format")
 	}
 
 	value := string(cardStr[0])
@@ -25,15 +21,15 @@ func parseCard(cardStr string) (Card, error) {
 
 	validCards := []string{"2", "3", "4", "5", "6", "7", "8", "9", "t", "j", "q", "k", "a"}
 	if !contains(validCards, value) {
-		return Card{}, fmt.Errorf("invalid card value")
+		return cards.Card{}, fmt.Errorf("invalid card value")
 	}
 
 	validSuits := []string{"k", "r", "h", "s"}
 	if !contains(validSuits, suit) {
-		return Card{}, fmt.Errorf("invalid suit")
+		return cards.Card{}, fmt.Errorf("invalid suit")
 	}
 
-	return Card{
+	return cards.Card{
 		Value: value,
 		Suit:  suit,
 	}, nil
